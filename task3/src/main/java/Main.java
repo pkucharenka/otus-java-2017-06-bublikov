@@ -38,7 +38,7 @@ public class Main {
         }
 
         System.out.println("-------sort-------------");
-        Collections.sort(arrayListAdd, new Comparator<String>() {
+        Comparator<String> comparator = new Comparator<String>() {
             public int compare(String o1, String o2) {
                 int i1 = Integer.parseInt(o1.substring(0,1) + Integer.parseInt(o1.substring(2,3)) );
                 int i2 = Integer.parseInt(o2.substring(0,1) + Integer.parseInt(o2.substring(2,3)) );
@@ -48,18 +48,9 @@ public class Main {
                     return ( (i1>i2) ? -1 : 1 );
                 }
             }
-        });
-        Collections.sort(myArrayListAdd, new Comparator<String>() {
-            public int compare(String o1, String o2) {
-                int i1 = Integer.parseInt(o1.substring(0,1) + Integer.parseInt(o1.substring(2,3)) );
-                int i2 = Integer.parseInt(o2.substring(0,1) + Integer.parseInt(o2.substring(2,3)) );
-                if (i1==i2) {
-                    return 0;
-                } else {
-                    return ( (i1>i2) ? -1 : 1 );
-                }
-            }
-        });
+        };
+        Collections.sort(arrayListAdd, comparator);
+        Collections.sort(myArrayListAdd, comparator);
         size = Math.max( arrayListAdd.size(), myArrayListAdd.size() );
         for (int i=0; i<size; i++) {
             System.out.println("ArrayList: " + arrayListAdd.get(i) + "   MyArrayList: " + myArrayListAdd.get(i));
