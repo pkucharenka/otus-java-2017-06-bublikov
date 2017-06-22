@@ -11,7 +11,22 @@ class MyArrayList<T> implements List<T> {
     }
 
 
-    public int size() {
+    public MyArrayList(Collection<? extends T> arrCopy) {
+    	this.addAll(arrCopy);
+    }
+    
+    public void sort(Comparator<? super T> c) {
+        Arrays.sort((T[]) container, 0, size, c);
+    }
+    
+
+
+	public MyArrayList() {
+		super();
+	}
+
+
+	public int size() {
         return size;
     }
 
@@ -24,7 +39,18 @@ class MyArrayList<T> implements List<T> {
     }
 
     public Iterator<T> iterator() {
-        return null;
+		return new Iterator<T>() {
+			int index;
+			@Override
+			public boolean hasNext() {
+				return index<size;
+			}
+			@Override
+			public T next() {				
+				return (T) container[index++];
+			}
+		};
+        
     }
 
     public Object[] toArray() {
@@ -80,7 +106,8 @@ class MyArrayList<T> implements List<T> {
     }
 
     public T set(int index, T element) {
-        return null;
+        container[index] = element;
+    	return element;
     }
 
     public void add(int index, T element) {

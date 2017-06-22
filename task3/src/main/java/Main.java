@@ -19,19 +19,22 @@ public class Main {
 
         System.out.println("-------addAll-------------");
         List<String> arrayListAdd = new ArrayList<String>(); List<String> myArrayListAdd = new MyArrayList<String>();
+        
         arrayListAdd.addAll( arrayList1 ); myArrayListAdd.addAll( myArrayList1 );
         arrayListAdd.addAll( arrayList2 ); myArrayListAdd.addAll( myArrayList2 );
-        //Collections.addAll(arrayListAdd, "3_1", "3_2", "3_3"); Collections.addAll(myArrayListAdd, "3_1", "3_2", "3_3");
+        Collections.addAll(arrayListAdd, "3_1", "3_2", "3_3"); Collections.addAll(myArrayListAdd, "3_1", "3_2", "3_3");
         int size = Math.max( arrayListAdd.size(), myArrayListAdd.size() );
         for (int i=0; i<size; i++) {
             System.out.println("ArrayList: " + arrayListAdd.get(i) + "   MyArrayList: " + myArrayListAdd.get(i));
         }
 
         System.out.println("-------copy-------------");
-        List<String> arrayListCopy = new ArrayList<String>( arrayList1 );
-        Collections.copy(arrayListCopy, arrayList2);
-        for (String s : arrayListCopy) {
-            System.out.println(s);
+        List<String> arrayListCopy = new ArrayList<String>( arrayList1 ); List<String> myArrayListCopy = new MyArrayList<String>( myArrayList1 );
+        Collections.copy(arrayListCopy, arrayList2); 
+        Collections.copy(myArrayListCopy, myArrayList2);
+        size = Math.max( arrayListCopy.size(), myArrayListCopy.size() );
+        for (int i=0; i<size; i++) {
+            System.out.println("ArrayList: " + arrayListCopy.get(i) + "   MyArrayList: " + myArrayListCopy.get(i));
         }
 
         System.out.println("-------sort-------------");
@@ -46,8 +49,20 @@ public class Main {
                 }
             }
         });
-        for (String s : arrayListAdd) {
-            System.out.println(s);
+        Collections.sort(myArrayListAdd, new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                int i1 = Integer.parseInt(o1.substring(0,1) + Integer.parseInt(o1.substring(2,3)) );
+                int i2 = Integer.parseInt(o2.substring(0,1) + Integer.parseInt(o2.substring(2,3)) );
+                if (i1==i2) {
+                    return 0;
+                } else {
+                    return ( (i1>i2) ? -1 : 1 );
+                }
+            }
+        });
+        size = Math.max( arrayListAdd.size(), myArrayListAdd.size() );
+        for (int i=0; i<size; i++) {
+            System.out.println("ArrayList: " + arrayListAdd.get(i) + "   MyArrayList: " + myArrayListAdd.get(i));
         }
 
     }
