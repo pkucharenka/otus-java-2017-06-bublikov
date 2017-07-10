@@ -16,13 +16,22 @@ public class ArrayListTest {
     @Before
     public void testprepare() {
         arr = new ArrayList<>();
+        arr.add(0);
+        System.out.println("call before");
     }
     @Test
-    public void testrun() {
+    public void testrunAdd() {
         arr.add(1);
+        System.out.println("call test add");
+    }
+    @Test
+    public void testrunRemove() {
+        arr.add(1);
+        System.out.println("call test remove");
     }
     @After
     public void testend() {
         arr.clear();
+        System.out.println("call after");
     }
 }
