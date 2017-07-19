@@ -2,6 +2,7 @@ package ru.otus.bvd;
 
 import ru.otus.bvd.atm.ATM;
 import ru.otus.bvd.atm.ATMBuilder;
+import ru.otus.bvd.atm.CashInsufficientException;
 import ru.otus.bvd.bank.Banknote;
 
 import java.util.Random;
@@ -16,11 +17,22 @@ public class Main {
 
         ATM atm = atmBuilder.getAtm();
 
-        atm.cashIn( new Banknote[] {new Banknote(randomValue()),
-                new Banknote(randomValue()), new Banknote(randomValue()), new Banknote(randomValue()), new Banknote(randomValue()) } );
+        Random random = new Random();
+        
+        Banknote[] banknotesIn = new Banknote[random.nextInt(40)+1];
+        for (int i=0; i<banknotesIn.length; i++)
+        	banknotesIn[i]=new Banknote( randomValue() );
+        
+        atm.cashIn(banknotesIn);
         atm.printBalance( atm.getScreen() );
 
-        atm.dispense(1500);
+        
+        
+        try {
+			atm.dispense(30000);
+		} catch (CashInsufficientException e) {
+			e.printStackTrace();
+		}
         atm.printBalance(atm.getScreen() );
     }
 
