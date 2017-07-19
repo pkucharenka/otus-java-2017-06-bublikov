@@ -3,13 +3,12 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="222.5" y="82.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.CashIn</node>
-    <node x="182.25" y="227.0">ru.otus.bvd.atm.ATM</node>
-    <node x="10.5" y="89.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen</node>
-    <node x="0.0" y="0.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Printable</node>
-    <node x="0.0" y="261.0">ru.otus.bvd.bank.Banknote</node>
-    <node x="322.5" y="82.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Dispenser</node>
-    <node x="108.50000000000001" y="82.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.BoxCash</node>
+    <node x="-418.0" y="124.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.CashIn</node>
+    <node x="-411.5" y="2.0">ru.otus.bvd.atm.ATM</node>
+    <node x="-312.0" y="-90.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen</node>
+    <node x="-320.5" y="-172.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Printable</node>
+    <node x="-549.0" y="-90.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.Dispenser</node>
+    <node x="-426.0" y="-90.0">ru.otus.bvd.atm.ru.otus.bvd.atm.part.BoxCash</node>
   </nodes>
   <notes />
   <edges>
@@ -18,55 +17,55 @@
       <point x="0.0" y="16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ATM" target="ru.otus.bvd.atm.ru.otus.bvd.atm.part.Dispenser">
-      <point x="20.3125" y="-16.0" />
-      <point x="231.0625" y="154.0" />
-      <point x="348.25" y="154.0" />
+      <point x="-27.08333333333337" y="-16.0" />
+      <point x="-406.08333333333337" y="-18.0" />
+      <point x="-523.25" y="-18.0" />
       <point x="-25.75" y="16.0" />
     </edge>
-    <edge source="ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen" target="ru.otus.bvd.atm.ATM">
-      <point x="20.0" y="16.0" />
-      <point x="68.5" y="154.0" />
-      <point x="190.4375" y="154.0" />
-      <point x="-20.3125" y="-16.0" />
-    </edge>
     <edge source="ru.otus.bvd.atm.ATM" target="ru.otus.bvd.atm.ru.otus.bvd.atm.part.BoxCash">
-      <point x="-12.1875" y="-16.0" />
-      <point x="198.5625" y="144.0" />
-      <point x="132.0" y="144.0" />
+      <point x="-5.416666666666686" y="-16.0" />
+      <point x="-384.41666666666663" y="-38.0" />
+      <point x="-402.5" y="-38.0" />
       <point x="-23.5" y="16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ru.otus.bvd.atm.part.Dispenser" target="ru.otus.bvd.atm.ATM">
       <point x="25.75" y="16.0" />
-      <point x="399.75" y="164.0" />
-      <point x="239.1875" y="164.0" />
-      <point x="28.4375" y="-16.0" />
+      <point x="-471.75" y="-28.0" />
+      <point x="-395.25" y="-28.0" />
+      <point x="-16.25" y="-16.0" />
+    </edge>
+    <edge source="ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen" target="ru.otus.bvd.atm.ATM">
+      <point x="20.0" y="16.0" />
+      <point x="-252.0" y="-18.0" />
+      <point x="-351.91666666666663" y="-18.0" />
+      <point x="27.083333333333314" y="-16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ATM" target="ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen">
-      <point x="-28.4375" y="-16.0" />
-      <point x="182.3125" y="164.0" />
-      <point x="28.5" y="164.0" />
+      <point x="16.25" y="-16.0" />
+      <point x="-362.75" y="-28.0" />
+      <point x="-292.0" y="-28.0" />
       <point x="-20.0" y="16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ru.otus.bvd.atm.part.BoxCash" target="ru.otus.bvd.atm.ATM">
       <point x="23.5" y="16.0" />
-      <point x="179.0" y="134.0" />
-      <point x="206.6875" y="134.0" />
-      <point x="-4.0625" y="-16.0" />
+      <point x="-355.5" y="-38.0" />
+      <point x="-373.58333333333326" y="-38.0" />
+      <point x="5.416666666666686" y="-16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ATM" target="ru.otus.bvd.atm.ru.otus.bvd.atm.part.CashIn">
-      <point x="4.0625" y="-16.0" />
-      <point x="214.8125" y="134.0" />
-      <point x="242.5" y="134.0" />
-      <point x="-20.0" y="16.0" />
+      <point x="16.25" y="16.0" />
+      <point x="-362.75" y="59.0" />
+      <point x="-359.0" y="59.0" />
+      <point x="20.0" y="-16.0" />
     </edge>
     <edge source="ru.otus.bvd.atm.ru.otus.bvd.atm.part.CashIn" target="ru.otus.bvd.atm.ATM">
-      <point x="20.0" y="16.0" />
-      <point x="282.5" y="144.0" />
-      <point x="222.9375" y="144.0" />
-      <point x="12.1875" y="-16.0" />
+      <point x="-20.0" y="-16.0" />
+      <point x="-399.0" y="59.0" />
+      <point x="-395.25" y="59.0" />
+      <point x="-16.25" y="16.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="14.0" y="140.5" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="40.5" />
   <SelectedNodes />
   <Categories />
   <SCOPE>All</SCOPE>

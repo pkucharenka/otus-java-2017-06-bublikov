@@ -13,13 +13,17 @@ public class CashIn {
         this.atm = atm;
     }
 
-    public boolean validate (Banknote[] banknotes) {
-        return true;
+    public int validate (Banknote[] banknotes) {
+        int sum = 0;
+        for (Banknote banknote : banknotes) {
+            sum = sum + banknote.value;
+        }
+        return sum;
     }
 
-    public void toBox (Banknote[] banknotes, int value, BoxCash boxCash) {
+    public void toBox (Banknote[] banknotes, BoxCash boxCash) {
     	for (Banknote bn : banknotes) {
-    		if (bn.value==value) {
+    		if (bn.value==boxCash.value) {
     			boxCash.countBanknote++;
     		}
     	}

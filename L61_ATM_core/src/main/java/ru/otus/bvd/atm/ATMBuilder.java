@@ -16,10 +16,11 @@ public class ATMBuilder {
         return this;
     };
     public ATMBuilder buildBoxMoney() {
-        atm.box100 = new BoxCash(atm);
-        atm.box500 = new BoxCash(atm);
-        atm.box1000 = new BoxCash(atm);
-        atm.box5000 = new BoxCash(atm);
+        atm.boxesCash.add(new BoxCash(atm,50));
+        atm.boxesCash.add(new BoxCash(atm,25));
+        atm.boxesCash.add(new BoxCash(atm,10));
+        atm.boxesCash.add(new BoxCash(atm,5));
+        atm.boxesCash.add(new BoxCash(atm,1));
         return this;
     };
     public ATMBuilder buildCashIn() {
