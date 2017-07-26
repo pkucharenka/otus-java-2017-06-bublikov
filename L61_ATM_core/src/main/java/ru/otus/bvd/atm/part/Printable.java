@@ -1,4 +1,4 @@
-package ru.otus.bvd.atm.ru.otus.bvd.atm.part;
+package ru.otus.bvd.atm.part;
 
 /**
  * Created by vadim on 18.07.17.

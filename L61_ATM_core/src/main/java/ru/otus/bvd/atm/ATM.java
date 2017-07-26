@@ -1,7 +1,7 @@
 package ru.otus.bvd.atm;
 
-import ru.otus.bvd.atm.ru.otus.bvd.atm.exceptions.CashInsufficientException;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.part.*;
+import ru.otus.bvd.atm.exceptions.CashInsufficientException;
+import ru.otus.bvd.atm.part.*;
 import ru.otus.bvd.bank.Banknote;
 
 import java.util.*;

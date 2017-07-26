@@ -2,8 +2,8 @@ package ru.otus.bvd;
 
 import ru.otus.bvd.atm.ATM;
 import ru.otus.bvd.atm.ATMBuilder;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.exceptions.BanknotesInsufficientException;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.exceptions.CashInsufficientException;
+import ru.otus.bvd.atm.exceptions.BanknotesInsufficientException;
+import ru.otus.bvd.atm.exceptions.CashInsufficientException;
 import ru.otus.bvd.bank.Banknote;
 
 import java.util.Random;

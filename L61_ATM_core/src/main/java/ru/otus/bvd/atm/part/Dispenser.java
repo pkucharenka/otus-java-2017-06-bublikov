@@ -1,4 +1,4 @@
-package ru.otus.bvd.atm.ru.otus.bvd.atm.part;
+package ru.otus.bvd.atm.part;
 
 import ru.otus.bvd.atm.ATM;
 

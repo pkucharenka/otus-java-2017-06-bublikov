@@ -1,9 +1,9 @@
 package ru.otus.bvd.atm;
 
-import ru.otus.bvd.atm.ru.otus.bvd.atm.part.BoxCash;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.part.CashIn;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.part.Dispenser;
-import ru.otus.bvd.atm.ru.otus.bvd.atm.part.Screen;
+import ru.otus.bvd.atm.part.BoxCash;
+import ru.otus.bvd.atm.part.CashIn;
+import ru.otus.bvd.atm.part.Dispenser;
+import ru.otus.bvd.atm.part.Screen;
 
 /**
  * Created by vadim on 16.07.17.
