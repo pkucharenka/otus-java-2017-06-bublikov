@@ -11,14 +11,15 @@ import java.util.Random;
 /**
  * Created by vadim on 16.07.17.
  */
-public class Main {
+public class MainATM {
     public static void main(String[] args) {
         ATMBuilder atmBuilder = new ATMBuilder();
         atmBuilder.createATM().buildBoxMoney().buildCashIn().buildDispenser().buildPrinter().buildScreen();
 
         ATM atm = atmBuilder.getAtm();
+        atm.initial();
 
-        plusCash(atm, 10);
+        plusCash(atm, 3);
         minusCash(atm);
 
         atm.printBalance(atm.getScreen() );

@@ -18,7 +18,19 @@ public class ATM {
     Screen screen;
 
 
-
+    public void initial() {
+    	for (BoxCash box : boxesCash) {
+    		switch (box.value) {
+    			case 1: box.countBanknote=10; break; 
+    			case 5: box.countBanknote=10; break; 
+    			case 10: box.countBanknote=10; break;
+    			case 25: box.countBanknote=10; break;
+    			case 50: box.countBanknote=10; break;
+    		}
+    	}
+        System.out.println("Выполнена инициация банкомата. Текущий баланс банкомата " + getBalance() + " " + boxState());
+    }
+    
     public void cashIn (Banknote[] banknotes) {
         int sum = cashIn.validate(banknotes);
         System.out.println("Запрошено пополнение на сумму " + sum + " Текущий баланс банкомата " + getBalance() + " " + boxState());
