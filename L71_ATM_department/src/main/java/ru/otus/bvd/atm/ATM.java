@@ -3,6 +3,7 @@ package ru.otus.bvd.atm;
 import ru.otus.bvd.atm.exceptions.CashInsufficientException;
 import ru.otus.bvd.atm.part.*;
 import ru.otus.bvd.bank.Banknote;
+import ru.otus.bvd.department.CommandInitial;
 
 import java.util.*;
 
@@ -18,15 +19,9 @@ public class ATM {
     Screen screen;
 
 
-    public void initial() {
+    public void initial(CommandInitial commandInitial) {
     	for (BoxCash box : boxesCash) {
-    		switch (box.value) {
-    			case 1: box.countBanknote=10; break; 
-    			case 5: box.countBanknote=10; break; 
-    			case 10: box.countBanknote=10; break;
-    			case 25: box.countBanknote=10; break;
-    			case 50: box.countBanknote=10; break;
-    		}
+            box.countBanknote = commandInitial.getBoxesCashCount().get(box.value);
     	}
         System.out.println("Выполнена инициация банкомата. Текущий баланс банкомата " + getBalance() + " " + boxState());
     }

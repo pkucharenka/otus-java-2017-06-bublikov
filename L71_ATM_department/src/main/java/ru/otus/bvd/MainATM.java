@@ -17,7 +17,6 @@ public class MainATM {
         atmBuilder.createATM().buildBoxMoney().buildCashIn().buildDispenser().buildPrinter().buildScreen();
 
         ATM atm = atmBuilder.getAtm();
-        atm.initial();
 
         plusCash(atm, 3);
         minusCash(atm);

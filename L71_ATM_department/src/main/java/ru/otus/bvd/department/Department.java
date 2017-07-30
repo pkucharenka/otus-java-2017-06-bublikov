@@ -1,8 +1,16 @@
 package ru.otus.bvd.department;
 
+import ru.otus.bvd.atm.ATM;
+import ru.otus.bvd.atm.ATMBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Department {
+	List<ATM> atmList = new ArrayList<>();
+
+
 	public void start() {
 		System.out.println("Welcome to department app!\n"
 				+ "commands:\n"
@@ -28,19 +36,33 @@ public class Department {
 		}		
 	}
 	
-	private static void initialAllATM() {
-		// TODO Auto-generated method stub
+	private void initialAllATM() {
+		for (ATM atm : atmList) {
+			CommandInitial commandInitial = new CommandInitial();
+			commandInitial.addCashCount(1,10);
+			commandInitial.addCashCount(5,10);
+			commandInitial.addCashCount(10,10);
+			commandInitial.addCashCount(25,10);
+			commandInitial.addCashCount(50,10);
+			atm.initial(commandInitial);
+			System.out.println("initial complete");
+		}
 		
 	}
 
-	private static void printBalance() {
-		// TODO Auto-generated method stub
-		
+	private void printBalance() {
+		for (ATM atm : atmList) {
+			System.out.println(atm.getBalance());
+		}
 	}
 
-	private static void addATM() {
-		// TODO Auto-generated method stub
-		
+	private void addATM() {
+		ATMBuilder atmBuilder = new ATMBuilder();
+		atmBuilder.createATM().buildBoxMoney().buildCashIn().buildDispenser().buildPrinter().buildScreen();
+
+		ATM atm = atmBuilder.getAtm();
+		atmList.add(atm);
+		System.out.println("ATM #" + atmList.indexOf(atm) + " was added");
 	}
 	
 	
