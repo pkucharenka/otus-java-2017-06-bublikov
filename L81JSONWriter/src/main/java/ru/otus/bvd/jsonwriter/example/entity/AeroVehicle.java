@@ -29,4 +29,7 @@ public class AeroVehicle {
     }
 
     public int[] intArray = {1,2,3};
+    
+    public String[][] strArray = { {"a","b","c"}, {"s","d","f"} };  
+    
 }
