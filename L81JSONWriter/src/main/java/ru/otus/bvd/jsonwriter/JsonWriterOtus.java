@@ -1,18 +1,12 @@
 package ru.otus.bvd.jsonwriter;
 
+import org.json.simple.JSONObject;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import ru.otus.bvd.jsonwriter.example.entity.AeroVehicle;
-import ru.otus.bvd.jsonwriter.example.entity.AeroVehicleUtils;
 
 /**
  * Created by vadim on 06.08.17.
@@ -54,7 +48,6 @@ public class JsonWriterOtus {
         }
         return str;
     }
-    
 
     private void navigateArr(Object arrayField, StringBuilder sb) {    	
     	int length = Array.getLength(arrayField);
@@ -83,21 +76,5 @@ public class JsonWriterOtus {
 	    }
 	    sb.setLength( sb.length()-1 );
 	    sb.append(']');
-    }
-
-    public static void main(String[] args) {
-    	AeroVehicle copter = AeroVehicleUtils.createCopter();
-        JsonWriterOtus otusWriter = new JsonWriterOtus();
-        String outputJWO = otusWriter.toJSON(copter);
-        System.out.println( outputJWO );
-        
-        Gson gson = new GsonBuilder().create();
-        AeroVehicle copterUnserialize = gson.fromJson(outputJWO, AeroVehicle.class);
-        
-        
-        String outputGSON = gson.toJson(copter, AeroVehicle.class);
-        String outputGSONUnserialize = gson.toJson(copterUnserialize, AeroVehicle.class);
-        System.out.println( outputGSON  );
-        System.out.println( outputGSONUnserialize  );
     }
 }
