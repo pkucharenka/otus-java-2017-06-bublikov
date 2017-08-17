@@ -15,7 +15,7 @@ public class JsonWriterOtusTest {
 		//сериализуем нашей библиотекой
 		AeroVehicle copter = AeroVehicleUtils.createCopter();
 		JsonWriterOtus otusWriter = new JsonWriterOtus();
-		String outputJWO = otusWriter.toJSON(copter);
+		String outputJWO = otusWriter.toJson(copter);
 		System.out.println("output JsonWriterOtus = " + outputJWO );
 
 		//десереализуем в новый объект с помощью gson

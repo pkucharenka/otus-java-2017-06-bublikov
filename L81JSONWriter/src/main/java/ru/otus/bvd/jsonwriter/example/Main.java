@@ -1,5 +1,8 @@
 package ru.otus.bvd.jsonwriter.example;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import ru.otus.bvd.jsonwriter.JsonWriterOtus;
 import ru.otus.bvd.jsonwriter.example.entity.AeroVehicle;
 import ru.otus.bvd.jsonwriter.example.entity.AeroVehicleUtils;
@@ -12,7 +15,11 @@ public class Main {
     {
     	AeroVehicle copter = AeroVehicleUtils.createCopter();
         JsonWriterOtus otusWriter = new JsonWriterOtus();
-        String outputJWO = otusWriter.toJSON(copter);
+        String outputJWO = otusWriter.toJson(copter);
         System.out.println( outputJWO );
+        
+		Gson gson = new GsonBuilder().create();
+		String outputGSON = gson.toJson(copter, AeroVehicle.class);
+		System.out.println(outputGSON);        
     }
 }
