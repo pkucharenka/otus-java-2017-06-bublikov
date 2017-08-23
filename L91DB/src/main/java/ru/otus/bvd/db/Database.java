@@ -28,11 +28,6 @@ public class Database {
 			e.printStackTrace();
 		}
 
-//        try {
-//            Console.main(); // package is org.h2.tools
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
     
     public Connection getConnection() {
@@ -70,6 +65,14 @@ public class Database {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public static void main(String[] args) {
+		try {
+			Console.main(); //процесс продолжает выполняться
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
     
 }

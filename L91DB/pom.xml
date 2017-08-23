@@ -10,6 +10,12 @@
 		    <artifactId>h2</artifactId>
 		    <version>1.4.196</version>
   		</dependency>
+  		
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+		</dependency>  		
   	</dependencies>
   
     <properties>
@@ -51,7 +57,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>                      
         </plugins>
     </build>
   
