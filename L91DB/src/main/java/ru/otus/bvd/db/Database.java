@@ -44,24 +44,24 @@ public class Database {
 		//create table z#user
         boolean tableExist=true;
         try (Connection connection = getConnection();
-			 ResultSet rs = connection.getMetaData().getTables(null, null, "Z_USER", null);
-		) {
+            ResultSet rs = connection.getMetaData().getTables(null, null, "Z_USER", null);
+        ) {
             if (!rs.next()) {
-                tableExist = false;
+              tableExist = false;
             } else {
-                System.out.println("table Z_USER already exists");
+              System.out.println("table Z_USER already exists");
             }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
         if (!tableExist) {
-            try (Connection connection = getConnection();
-                 Statement stmnt = connection.createStatement()
+          try (Connection connection = getConnection();
+            Statement stmnt = connection.createStatement()
             ) {
-                stmnt.execute(DDL_TABLE_USER);
-                System.out.println("table Z_USER created");
+              stmnt.execute(DDL_TABLE_USER);
+              System.out.println("table Z_USER created");
             } catch (SQLException e) {
-                e.printStackTrace();
+              e.printStackTrace();
             }
         }
     }
