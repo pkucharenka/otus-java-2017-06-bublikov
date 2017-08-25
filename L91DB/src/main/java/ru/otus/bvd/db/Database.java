@@ -41,7 +41,6 @@ public class Database {
     }
 
     public void createScheme () {
-
 		//create table z#user
         boolean tableExist=true;
         try (Connection connection = getConnection();
