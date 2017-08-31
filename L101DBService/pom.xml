@@ -39,7 +39,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.bvd.Main</mainClass>
+                            <mainClass>ru.otus.bvd.example.MainHibernetDBService</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>
