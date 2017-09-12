@@ -1,7 +1,13 @@
 package ru.otus.bvd.webserver;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import ru.otus.bvd.servlet.AdminServlet;
+import ru.otus.bvd.servlet.LoginServlet;
 
 /**
  * Created by vadim on 10.09.17.
@@ -17,14 +23,30 @@ public class WebServer {
     public void init() {
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase(PUBLIC_HTML);
-
-        server.setHandler(resourceHandler);
-
+        
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.addServlet( new ServletHolder(new LoginServlet("anonymous")) , "/login");
+        context.addServlet( AdminServlet.class , "/admin");
+        
+        server.setHandler(new HandlerList(resourceHandler, context));
+        
     }
-
+    
+    public Server getServer() {
+        return server;
+    }
+    
     public void start() {
         try {
             server.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void stop() {
+        try {
+            server.stop();
+            System.out.println("Web server shutdown");
         } catch (Exception e) {
             e.printStackTrace();
         }
