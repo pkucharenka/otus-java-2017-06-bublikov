@@ -8,6 +8,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 import ru.otus.bvd.servlet.AdminServlet;
 import ru.otus.bvd.servlet.LoginServlet;
+import ru.otus.bvd.servlet.ShutdownServlet;
 
 /**
  * Created by vadim on 10.09.17.
@@ -27,6 +28,7 @@ public class WebServer {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet( new ServletHolder(new LoginServlet("anonymous")) , "/login");
         context.addServlet( AdminServlet.class , "/admin");
+        context.addServlet( ShutdownServlet.class , "/shutdown");
         
         server.setHandler(new HandlerList(resourceHandler, context));
         
@@ -43,13 +45,8 @@ public class WebServer {
             e.printStackTrace();
         }
     }
-    public void stop() {
-        try {
-            server.stop();
-            System.out.println("Web server shutdown");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void stop() throws Exception {
+        server.stop();
     }
 
     public void join() {

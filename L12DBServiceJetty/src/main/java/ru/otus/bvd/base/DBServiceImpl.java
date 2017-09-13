@@ -5,12 +5,13 @@ import java.util.List;
 
 import ru.otus.bvd.cache.CacheElement;
 import ru.otus.bvd.cache.CacheEngine;
+import ru.otus.bvd.cache.CacheEngineAdmin;
 import ru.otus.bvd.cache.CacheEngineImpl;
 import ru.otus.bvd.dao.UserDataSetDao;
 import ru.otus.bvd.dataset.UserDataSet;
 import ru.otus.bvd.db.Database;
 
-public class DBServiceImpl implements DBService {
+public class DBServiceImpl implements DBService, DBServiceAdmin {
     private static final Database database = new Database();
     static {
         database.init();
@@ -18,6 +19,10 @@ public class DBServiceImpl implements DBService {
     }
     
     CacheEngine<Long, UserDataSet> cacheUser = new CacheEngineImpl<>(1000, 10000, 1000, false);    
+    
+    public CacheEngineAdmin getCacheEngine() {
+        return (CacheEngineAdmin) cacheUser;
+    }
     
     @Override
     public String getLocalStatus() {

@@ -70,7 +70,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.bvd.example.MainExecutorDBService</mainClass>
+                            <mainClass>ru.otus.bvd.example.MainExecutorDBServiceWithJetty</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>

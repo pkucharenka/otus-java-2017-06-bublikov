@@ -10,7 +10,7 @@ import java.util.function.Function;
 /**
  * Created by tully.
  */
-public class CacheEngineImpl<K, V> implements CacheEngine<K, V> {
+public class CacheEngineImpl<K, V> implements CacheEngine<K, V>, CacheEngineAdmin {
     private static final int TIME_THRESHOLD_MS = 5;
 
     private final int maxElements;
@@ -110,5 +110,25 @@ public class CacheEngineImpl<K, V> implements CacheEngine<K, V> {
 
     private boolean isT1BeforeT2(long t1, long t2) {
         return t1 < t2 + TIME_THRESHOLD_MS;
+    }
+
+    @Override
+    public boolean isEternal() {
+        return isEternal;
+    }
+
+    @Override
+    public long idleTimeMs() {
+        return idleTimeMs;
+    }
+
+    @Override
+    public long lifeTimeMs() {
+        return lifeTimeMs;
+    }
+
+    @Override
+    public int maxElements() {
+        return maxElements;
     }
 }
