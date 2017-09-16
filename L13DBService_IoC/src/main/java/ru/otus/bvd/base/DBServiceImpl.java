@@ -3,6 +3,9 @@ package ru.otus.bvd.base;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import ru.otus.bvd.cache.CacheElement;
 import ru.otus.bvd.cache.CacheEngine;
 import ru.otus.bvd.cache.CacheEngineAdmin;
@@ -11,19 +14,15 @@ import ru.otus.bvd.dao.UserDataSetDao;
 import ru.otus.bvd.dataset.UserDataSet;
 import ru.otus.bvd.db.Database;
 
-public class DBServiceImpl implements DBService, DBServiceAdmin {
+public class DBServiceImpl implements DBService, ApplicationContextAware {
     private static final Database database = new Database();
     static {
         database.init();
         database.createScheme();        
     }
-    
-    CacheEngine<Long, UserDataSet> cacheUser = new CacheEngineImpl<>(1000, 10000, 1000, false);    
-    
-    public CacheEngineAdmin getCacheEngine() {
-        return (CacheEngineAdmin) cacheUser;
-    }
-    
+
+    ApplicationContext springContext;
+
     @Override
     public String getLocalStatus() {
         return null;
@@ -37,7 +36,7 @@ public class DBServiceImpl implements DBService, DBServiceAdmin {
 
     @Override
     public UserDataSet read(long id) {
-        CacheElement cacheElement = cacheUser.get(id);
+        CacheElement cacheElement = getCache().get(id);
         if (cacheElement!=null) {
             UserDataSet userFromCache = (UserDataSet) cacheElement.getValue();
             System.out.println("read from cache id = " + id);
@@ -48,7 +47,7 @@ public class DBServiceImpl implements DBService, DBServiceAdmin {
         UserDataSet user = userDao.read(id);
         if (user!=null) {
             System.out.println("read from db id = " + id);
-            cacheUser.put( new CacheElement(id, user) );
+            getCache().put( new CacheElement(id, user) );
             return user;
         } else {
             return null;
@@ -69,7 +68,7 @@ public class DBServiceImpl implements DBService, DBServiceAdmin {
     @Override
     public void shutdown() {
         try {
-            cacheUser.dispose();
+            getCache().dispose();
             database.getConnection().close();
             database.shutdown();
             System.out.println("DBservice shutdown");
@@ -78,4 +77,11 @@ public class DBServiceImpl implements DBService, DBServiceAdmin {
         }
     }
 
+    private CacheEngine<Long, UserDataSet> getCache() {
+        return (CacheEngine<Long, UserDataSet>) springContext.getBean("cacheEngine");
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.springContext = applicationContext;
+    }
 }

@@ -13,10 +13,6 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>ru.otus.bvd.servlet.LoginServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>shutdownServlet</servlet-name>
-        <servlet-class>ru.otus.bvd.servlet.ShutdownServlet</servlet-class>
-    </servlet>
 
     <servlet-mapping>
         <servlet-name>adminServlet</servlet-name>
@@ -26,13 +22,16 @@
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>shutdownServlet</servlet-name>
-        <url-pattern>/shutdown</url-pattern>
-    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+    <listener>
+        <description>Application startup and shutdown events</description>
+        <display-name>Test</display-name>
+        <listener-class>ru.otus.bvd.servlet.ServletContextListenerApp</listener-class>
+    </listener>
+
 
 </web-app>

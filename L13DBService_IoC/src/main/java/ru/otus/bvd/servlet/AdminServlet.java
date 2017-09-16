@@ -1,18 +1,20 @@
 package ru.otus.bvd.servlet;
 
+import org.springframework.context.ApplicationContext;
+import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.cache.CacheEngine;
+import ru.otus.bvd.cache.CacheEngineAdmin;
+import ru.otus.bvd.example.DBActivity;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ru.otus.bvd.base.DBServiceAdmin;
-import ru.otus.bvd.cache.CacheEngine;
-import ru.otus.bvd.cache.CacheEngineAdmin;
-import ru.otus.bvd.example.MainExecutorDBServiceWithJetty;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * Created by tully.
@@ -46,11 +48,11 @@ public class AdminServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
+    private CacheEngineAdmin cacheEngineAdmin;
+    private DBService dbService;
     private Map<String, Object> createCacheVariablesMap() {
         Map<String, Object> cacheVariables = new HashMap<>();
-        DBServiceAdmin dbServiceAdmin = (DBServiceAdmin) MainExecutorDBServiceWithJetty.dbService;
-        CacheEngineAdmin cacheEngineAdmin = dbServiceAdmin.getCacheEngine();
-        
+
         cacheVariables.put("maxElements", cacheEngineAdmin.maxElements());
         cacheVariables.put("idleTime", cacheEngineAdmin.idleTimeMs());
         cacheVariables.put("isEternal", cacheEngineAdmin.isEternal() ? "Yes" : "No");
@@ -63,4 +65,17 @@ public class AdminServlet extends HttpServlet {
                 
         return cacheVariables;
     }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ApplicationContext springContext = (ApplicationContext) config.getServletContext().getAttribute("springContext");
+        cacheEngineAdmin = (CacheEngineAdmin) springContext.getBean("cacheEngine");
+        dbService = (DBService) springContext.getBean("dbService");
+
+        Thread dbActivity = new Thread( new DBActivity(dbService));
+        dbActivity.start();
+
+    }
+
 }
