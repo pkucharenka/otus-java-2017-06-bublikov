@@ -27,10 +27,13 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:SpringBeans.xml</param-value>
+    </context-param>
+
     <listener>
-        <description>Application startup and shutdown events</description>
-        <display-name>Test</display-name>
-        <listener-class>ru.otus.bvd.servlet.ServletContextListenerApp</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
 
