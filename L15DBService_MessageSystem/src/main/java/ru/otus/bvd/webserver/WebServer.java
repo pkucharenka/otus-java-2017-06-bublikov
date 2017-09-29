@@ -5,12 +5,11 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 
 import ru.otus.bvd.servlet.AdminServlet;
 import ru.otus.bvd.servlet.LoginServlet;
+import ru.otus.bvd.servlet.frontsocket.FrontSocketServlet;
 
 /**
  * Created by vadim on 10.09.17.
@@ -30,6 +29,7 @@ public class WebServer {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet( new ServletHolder(new LoginServlet("anonymous")) , "/login");
         context.addServlet( AdminServlet.class , "/admin");
+        context.addServlet(FrontSocketServlet.class, "/front");        
         
         context.addEventListener(new ContextLoaderListener());
         context.setInitParameter("contextConfigLocation", "classpath:SpringBeans.xml");                
