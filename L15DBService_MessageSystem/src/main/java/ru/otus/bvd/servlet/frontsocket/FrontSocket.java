@@ -14,6 +14,7 @@ public class FrontSocket {
 
     @OnWebSocketMessage
     public void onMessage(String data) {
+        System.out.println("onMessage");
 //        for (FrontSocket user : users) {
 //            try {
 //                user.getSession().getRemote().sendString(data);
