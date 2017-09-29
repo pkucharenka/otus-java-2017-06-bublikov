@@ -5,6 +5,9 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.ContextLoaderListener;
 
 import ru.otus.bvd.servlet.AdminServlet;
 import ru.otus.bvd.servlet.LoginServlet;
@@ -27,7 +30,10 @@ public class WebServer {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet( new ServletHolder(new LoginServlet("anonymous")) , "/login");
         context.addServlet( AdminServlet.class , "/admin");
-
+        
+        context.addEventListener(new ContextLoaderListener());
+        context.setInitParameter("contextConfigLocation", "classpath:SpringBeans.xml");                
+        
         server.setHandler(new HandlerList(resourceHandler, context));
         
     }
