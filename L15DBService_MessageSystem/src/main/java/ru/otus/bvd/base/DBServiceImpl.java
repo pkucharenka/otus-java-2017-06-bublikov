@@ -1,21 +1,31 @@
 package ru.otus.bvd.base;
 
-import java.sql.SQLException;
-import java.util.List;
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
 
-import org.springframework.beans.BeansException;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Logger;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import ru.otus.bvd.app.MessageSystemContext;
 import ru.otus.bvd.cache.CacheElement;
 import ru.otus.bvd.cache.CacheEngine;
-import ru.otus.bvd.cache.CacheEngineAdmin;
-import ru.otus.bvd.cache.CacheEngineImpl;
 import ru.otus.bvd.dao.UserDataSetDao;
 import ru.otus.bvd.dataset.UserDataSet;
 import ru.otus.bvd.db.Database;
+import ru.otus.bvd.messagesystem.Address;
+import ru.otus.bvd.messagesystem.Addressee;
 
-public class DBServiceImpl implements DBService, ApplicationContextAware {
+public class DBServiceImpl implements DBService, ApplicationContextAware, Addressee {
+    private static final Logger log = Logger.getLogger(DBServiceImpl.class.getName());
+
+    private final Address address;
     private static final Database database = new Database();
+    private final MessageSystemContext context;
     static {
         database.init();
         database.createScheme();        
@@ -23,11 +33,20 @@ public class DBServiceImpl implements DBService, ApplicationContextAware {
 
     ApplicationContext springContext;
 
+    public DBServiceImpl() {
+        this.address = null;
+        this.context = null;
+    }
+    public DBServiceImpl(MessageSystemContext context, Address address) {
+        this.address = address;
+        this.context = context;        
+    }
+    
     @Override
     public String getLocalStatus() {
         return null;
     }
-
+    
     @Override
     public void save(UserDataSet dataSet) {
         UserDataSetDao userDao = new UserDataSetDao(database.getConnection());
@@ -39,14 +58,14 @@ public class DBServiceImpl implements DBService, ApplicationContextAware {
         CacheElement cacheElement = getCache().get(id);
         if (cacheElement!=null) {
             UserDataSet userFromCache = (UserDataSet) cacheElement.getValue();
-            System.out.println("read from cache id = " + id);
+            if (log.isLoggable(INFO)) log.info("read from cache id = " + id);
             return userFromCache;
         }
         
         UserDataSetDao userDao = new UserDataSetDao(database.getConnection());
         UserDataSet user = userDao.read(id);
         if (user!=null) {
-            System.out.println("read from db id = " + id);
+            if (log.isLoggable(INFO)) log.info("read from db id = " + id);
             getCache().put( new CacheElement(id, user) );
             return user;
         } else {
@@ -62,7 +81,7 @@ public class DBServiceImpl implements DBService, ApplicationContextAware {
 
     @Override
     public List<UserDataSet> readAll() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -71,9 +90,9 @@ public class DBServiceImpl implements DBService, ApplicationContextAware {
             getCache().dispose();
             database.getConnection().close();
             database.shutdown();
-            System.out.println("DBservice shutdown");
+            if (log.isLoggable(INFO)) log.info("DBservice shutdown");
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (log.isLoggable(SEVERE)) log.log(SEVERE, "DB shutdown failed", e);
         }
     }
 
@@ -81,7 +100,16 @@ public class DBServiceImpl implements DBService, ApplicationContextAware {
         return (CacheEngine<Long, UserDataSet>) springContext.getBean("cacheEngine");
     }
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.springContext = applicationContext;
     }
+
+    @Override
+    public Address getAddress() {
+        return address;
+    }
+    public void init() {
+        context.getMessageSystem().addAddressee(this);
+    }
+    
 }

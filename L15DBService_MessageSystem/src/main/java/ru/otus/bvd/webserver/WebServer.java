@@ -7,16 +7,16 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.springframework.web.context.ContextLoaderListener;
 
+import ru.otus.bvd.front.FrontSocketServlet;
 import ru.otus.bvd.servlet.AdminServlet;
 import ru.otus.bvd.servlet.LoginServlet;
-import ru.otus.bvd.servlet.frontsocket.FrontSocketServlet;
 
 /**
  * Created by vadim on 10.09.17.
  */
 public class WebServer {
     private final Server server;
-    private final static String PUBLIC_HTML = "public_html";
+    private static final String PUBLIC_HTML = "public_html";
 
     public WebServer(int port) {
         server = new Server(port);
@@ -57,7 +57,7 @@ public class WebServer {
         try {
             server.join();
         } catch (InterruptedException e) {
-            Thread.currentThread().isInterrupted();
+            Thread.currentThread().interrupt();
         }
     }
 }

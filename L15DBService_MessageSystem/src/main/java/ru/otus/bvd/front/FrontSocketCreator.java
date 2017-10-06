@@ -1,4 +1,4 @@
-package ru.otus.bvd.servlet.frontsocket;
+package ru.otus.bvd.front;
 
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
