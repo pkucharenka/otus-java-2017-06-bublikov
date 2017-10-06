@@ -19,7 +19,7 @@ public class DBActivity implements Runnable {
     private String[] names = new String[] {"Aleksey","Dmitriy","Ilya"};
     private String getRandomName() {
         Random random = new Random();
-        return names[random.nextInt(2)] + " " + names[random.nextInt(2)] + " " + names[random.nextInt(2)]; 
+        return names[random.nextInt(3)] + " " + names[random.nextInt(3)] + " " + names[random.nextInt(3)]; 
     }
     private int getRandomAge() {
         Random random = new Random();
