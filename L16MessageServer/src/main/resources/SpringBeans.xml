@@ -5,7 +5,6 @@
  
 
     <bean id="messageSystem" class="ru.otus.bvd.messagesystem.MessageSystem"   />
-
     <bean id="frontAddress" class="ru.otus.bvd.messagesystem.Address">
         <constructor-arg name="id" value="Frontend"/>
     </bean>
