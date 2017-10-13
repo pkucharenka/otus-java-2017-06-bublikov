@@ -1,5 +1,7 @@
 package ru.otus.bvd.example;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,11 +23,20 @@ public class MainMessageSystem {
     public static void main(String[] args) throws Exception {
         MainMessageSystem mainInstace = new MainMessageSystem();
         configureLog();      
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit( ()-> {
+            try {
+                new ServerMain().start();
+            } catch (Exception e) {
+                Thread.currentThread().interrupt();
+            }           
+        } );
+        
+        
         ApplicationContext context = new ClassPathXmlApplicationContext("SpringBeans.xml");
         mainInstace.initAutowiredBeans(context);
         mainInstace.messageSystem.start();
         mainInstace.startDBActivity();
-        new ServerMain().start();
     }
     
     private static void configureLog() {

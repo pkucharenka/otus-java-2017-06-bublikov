@@ -21,6 +21,8 @@ public class FrontendServiceImpl implements FrontendService, Addressee {
     public FrontendServiceImpl(MessageSystemContext context, Address address) {
         this.context = context;
         this.address = address;
+        
+        добавить создание сокет клиента см. ClientMain
     }
 
     public void init() {
