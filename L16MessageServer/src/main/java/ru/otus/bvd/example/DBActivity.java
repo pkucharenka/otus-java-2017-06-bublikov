@@ -1,7 +1,6 @@
 package ru.otus.bvd.example;
 
 import java.util.Random;
-import static java.util.logging.Level.*;
 import java.util.logging.Logger;
 
 import ru.otus.bvd.base.DBService;
@@ -33,13 +32,13 @@ public class DBActivity implements Runnable {
           try {
               UserDataSet userDataSetS = new UserDataSet(getRandomName(), getRandomAge(), null);
               dbService.save(userDataSetS);
-              log.info("user to db  : " + userDataSetS.toString());
+              log.config("user to db  : " + userDataSetS.toString());
               
               UserDataSet userDataSetR = dbService.read(1);
-              log.info("user from db: " + userDataSetR.toString());
+              log.config("user from db: " + userDataSetR.toString());
       
               userDataSetR = dbService.read(1);
-              log.info("user from db: " + userDataSetR.toString());
+              log.config("user from db: " + userDataSetR.toString());
                       
               //example life time
               long timeEndLife = System.currentTimeMillis() + 10100;                  

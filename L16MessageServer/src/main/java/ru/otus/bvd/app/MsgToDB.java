@@ -9,8 +9,8 @@ import ru.otus.bvd.messagesystem.Message;
  * Created by tully.
  */
 public abstract class MsgToDB extends Message {
-    public MsgToDB(Address from, Address to, long requestId) {
-        super(from, to, requestId);
+    public MsgToDB(Class<?> klass, Address from, Address to, long requestId) {
+        super(klass, from, to, requestId);
     }
 
     @Override

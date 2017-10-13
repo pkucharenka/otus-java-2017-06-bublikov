@@ -10,7 +10,7 @@ public class MsgGetUserByIdAnswer extends MsgToFrontend {
     private final long id;
 
     public MsgGetUserByIdAnswer(Address from, Address to, long requestId, String name, long id) {
-        super(from, to, requestId);
+        super(MsgGetUserByIdAnswer.class, from, to, requestId);
         this.name = name;
         this.id = id;
     }

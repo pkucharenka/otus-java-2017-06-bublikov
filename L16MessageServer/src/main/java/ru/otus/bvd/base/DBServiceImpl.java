@@ -1,7 +1,6 @@
 package ru.otus.bvd.base;
 
-import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Level.*;
 
 import java.sql.SQLException;
 import java.util.Collections;
@@ -58,14 +57,14 @@ public class DBServiceImpl implements DBService, ApplicationContextAware, Addres
         CacheElement cacheElement = getCache().get(id);
         if (cacheElement!=null) {
             UserDataSet userFromCache = (UserDataSet) cacheElement.getValue();
-            if (log.isLoggable(INFO)) log.info("read from cache id = " + id);
+            if (log.isLoggable(CONFIG)) log.config("read from cache id = " + id);
             return userFromCache;
         }
         
         UserDataSetDao userDao = new UserDataSetDao(database.getConnection());
         UserDataSet user = userDao.read(id);
         if (user!=null) {
-            if (log.isLoggable(INFO)) log.info("read from db id = " + id);
+            if (log.isLoggable(CONFIG)) log.config("read from db id = " + id);
             getCache().put( new CacheElement(id, user) );
             return user;
         } else {
@@ -90,7 +89,7 @@ public class DBServiceImpl implements DBService, ApplicationContextAware, Addres
             getCache().dispose();
             database.getConnection().close();
             database.shutdown();
-            if (log.isLoggable(INFO)) log.info("DBservice shutdown");
+            if (log.isLoggable(CONFIG)) log.config("DBservice shutdown");
         } catch (SQLException e) {
             if (log.isLoggable(SEVERE)) log.log(SEVERE, "DB shutdown failed", e);
         }

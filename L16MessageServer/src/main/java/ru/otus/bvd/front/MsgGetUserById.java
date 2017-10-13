@@ -14,7 +14,7 @@ public class MsgGetUserById extends MsgToDB {
     private final long userId;
 
     public MsgGetUserById(MessageSystem messageSystem, Address from, Address to, long requestId, long userId) {
-        super(from, to, requestId);
+        super(MsgGetUserById.class, from, to, requestId);
         this.userId = userId;
         this.messageSystem = messageSystem;
     }

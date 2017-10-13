@@ -8,8 +8,8 @@ import ru.otus.bvd.messagesystem.Message;
  * Created by tully.
  */
 public abstract class MsgToFrontend extends Message {
-    public MsgToFrontend(Address from, Address to, long requestId) {
-        super(from, to, requestId);
+    public MsgToFrontend(Class<?> klass, Address from, Address to, long requestId) {
+        super(klass, from, to, requestId);
     }
 
     @Override
