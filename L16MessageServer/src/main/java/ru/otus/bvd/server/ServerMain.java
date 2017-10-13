@@ -28,33 +28,19 @@ public class ServerMain {
         new ServerMain().start();
     }
 
-    private void start() throws Exception {
+    public void start() throws Exception {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        startClients(CLIENTS_COUNT, executorService);
+        //startClients(CLIENTS_COUNT, executorService);
 
         startBlockingServer();
-        //startLogServer();
-        //startEchoServer();
 
         executorService.shutdown();
     }
 
-//    private void startLogServer() throws Exception {
-//        new NonBlockingLogSocketMsgServer().start();
-//    }
 
     private void startBlockingServer() throws Exception {
         new BlockingEchoSocketMsgServer().start();
     }
-
-//    private void startEchoServer() throws Exception {
-//        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-//        ObjectName name = new ObjectName("ru.otus:type=Server");
-//        NonBlockingEchoSocketMsgServer server = new NonBlockingEchoSocketMsgServer();
-//        mbs.registerMBean(server, name);
-//
-//        server.start();
-//    }
 
     private void startClients(int count, ScheduledExecutorService executorService) {
         for (int i = 0; i < count; i++) {
