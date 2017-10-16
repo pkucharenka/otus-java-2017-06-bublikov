@@ -31,8 +31,8 @@ public class WebServer {
         context.addServlet( AdminServlet.class , "/admin");
         context.addServlet(FrontSocketServlet.class, "/front");        
         
-        context.addEventListener(new ContextLoaderListener());
-        context.setInitParameter("contextConfigLocation", "classpath:SpringBeans.xml");                
+//        context.addEventListener(new ContextLoaderListener());
+//        context.setInitParameter("contextConfigLocation", "classpath:SpringBeans.xml");
         
         server.setHandler(new HandlerList(resourceHandler, context));
         

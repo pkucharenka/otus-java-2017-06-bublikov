@@ -40,6 +40,7 @@ public class FrontSocket {
         setSession(session);
         System.out.println("onOpen " + this.toString());
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+
     }
 
     public Session getSession() {

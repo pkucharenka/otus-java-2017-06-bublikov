@@ -13,10 +13,11 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.otus.bvd.base.DBService;
 import ru.otus.bvd.messagesystem.MessageSystem;
 import ru.otus.bvd.server.ServerMain;
+import ru.otus.bvd.webserver.WebServer;
 
 public class MainMessageSystem {
     private static final Logger logger = Logger.getLogger(MainMessageSystem.class.getName());
-    
+    WebServer webServer;
     @Autowired DBService dbService;
     @Autowired MessageSystem messageSystem;
 
@@ -37,6 +38,7 @@ public class MainMessageSystem {
         mainInstace.initAutowiredBeans(context);
         mainInstace.messageSystem.start();
         mainInstace.startDBActivity();
+        mainInstace.startWebServer();
     }
     
     private static void configureLog() {
@@ -51,6 +53,12 @@ public class MainMessageSystem {
     private void startDBActivity() {
         Thread dbActivity = new Thread( new DBActivity(dbService));
         dbActivity.start();                
-    }    
+    }
+    private void startWebServer() {
+        webServer = new WebServer(8090);
+        webServer.init();
+        webServer.start();
+    }
+
    
 }

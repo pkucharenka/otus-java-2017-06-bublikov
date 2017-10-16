@@ -2,7 +2,8 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
- 
+
+    <bean id="clientService" class="ru.otus.bvd.client.ClientServiceImpl" init-method="start"/>
 
     <bean id="messageSystem" class="ru.otus.bvd.messagesystem.MessageSystem"   />
     <bean id="frontAddress" class="ru.otus.bvd.messagesystem.Address">
@@ -21,6 +22,7 @@
     <bean id="frontService" class="ru.otus.bvd.front.FrontendServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />
         <constructor-arg ref = "frontAddress" />
+        <constructor-arg ref = "clientService" />
     </bean>
     <bean id="dbService" class="ru.otus.bvd.base.DBServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />
@@ -33,6 +35,7 @@
         <constructor-arg name="idleTimeMs" value="1000"/>
         <constructor-arg name="isEternal" value="false"/>
     </bean>
+
 
 
 </beans>

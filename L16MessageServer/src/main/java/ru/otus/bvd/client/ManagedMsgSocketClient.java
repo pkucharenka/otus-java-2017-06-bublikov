@@ -9,11 +9,11 @@ import ru.otus.bvd.app.SocketMsgClient;
 /**
  * Created by tully.
  */
-class ManagedMsgSocketClient extends SocketMsgClient {
+public class ManagedMsgSocketClient extends SocketMsgClient {
 
     private final Socket socket;
 
-    ManagedMsgSocketClient(String host, int port) throws IOException {
+    public ManagedMsgSocketClient(String host, int port) throws IOException {
         this(new Socket(host, port));
     }
 
