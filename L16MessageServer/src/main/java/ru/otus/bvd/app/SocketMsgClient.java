@@ -1,7 +1,10 @@
 package ru.otus.bvd.app;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import ru.otus.bvd.messagesystem.Address;
+import ru.otus.bvd.messagesystem.AddressDeserializer;
 import ru.otus.bvd.messagesystem.Message;
 
 import org.json.simple.JSONObject;
@@ -52,7 +55,7 @@ public class SocketMsgClient implements MsgClient {
     public Message take() throws InterruptedException {
         return input.take();
     }
-
+    
     @Override
     public void close() {
         shutdownRegistrations.forEach(Runnable::run);
@@ -60,22 +63,22 @@ public class SocketMsgClient implements MsgClient {
 
         executor.shutdown();
     }
-
+    
     public void init() {
         executor.execute(this::sendMessage);
         executor.execute(this::receiveMessage);
     }
-
+    
     public void addShutdownRegistration(Runnable runnable) {
         this.shutdownRegistrations.add(runnable);
     }
-
+    
     private void receiveMessage() {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             String inputLine;
             StringBuilder stringBuilder = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                //System.out.println("Message received: " + inputLine);
+            while ((inputLine = in.readLine()) != null) {                
+                logger.info("Client message received: '" + inputLine + "'");
                 stringBuilder.append(inputLine);
                 if (inputLine.isEmpty()) { //empty line is the end of the message
                     String json = stringBuilder.toString();
@@ -90,7 +93,7 @@ public class SocketMsgClient implements MsgClient {
             close();
         }
     }
-
+    
     private void sendMessage() {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
             while (socket.isConnected()) {
@@ -99,16 +102,18 @@ public class SocketMsgClient implements MsgClient {
                 out.println(json);
                 out.println(); //end of message
             }
-        } catch (InterruptedException | IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.toString());
         }
     }
-
+    
+    private static Gson gson = new GsonBuilder().registerTypeAdapter(Address.class, new AddressDeserializer()).create();
     private static Message getMsgFromJSON(String json) throws ParseException, ClassNotFoundException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(json);
         String className = (String) jsonObject.get(Message.CLASS_NAME_VARIABLE);
         Class<?> msgClass = Class.forName(className);
-        return (Message) new Gson().fromJson(json, msgClass);
+        
+        return (Message) gson.fromJson(json, msgClass);
     }
 }

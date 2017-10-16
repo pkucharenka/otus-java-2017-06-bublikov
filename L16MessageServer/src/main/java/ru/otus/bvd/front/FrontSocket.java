@@ -8,6 +8,8 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import ru.otus.bvd.example.MainMessageSystem;
+
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,6 +25,8 @@ public class FrontSocket {
 
     @OnWebSocketMessage
     public void onMessage(String data) {
+        if (frontService == null)
+            frontService = MainMessageSystem.appContext.getBean(FrontendService.class);
         long requestId = requestIdSeq.getAndIncrement();
         frontService.handleRequest(Long.parseLong(data), requestId, this);
     }
@@ -35,12 +39,11 @@ public class FrontSocket {
         }
     }
 
+    
     @OnWebSocketConnect
     public void onOpen(Session session) {
         setSession(session);
-        System.out.println("onOpen " + this.toString());
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-
+        System.out.println("onOpen " + this.toString());        
     }
 
     public Session getSession() {

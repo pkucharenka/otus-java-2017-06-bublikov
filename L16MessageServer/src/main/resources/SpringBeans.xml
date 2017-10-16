@@ -3,14 +3,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="clientService" class="ru.otus.bvd.client.ClientServiceImpl" init-method="start"/>
+    <bean id="serverSocketService" class="ru.otus.bvd.server.ServerSocketServiceImpl" init-method="start"/>
+    <bean id="clientSocketService" class="ru.otus.bvd.client.ClientSocketServiceImpl" init-method="start"/>
 
     <bean id="messageSystem" class="ru.otus.bvd.messagesystem.MessageSystem"   />
     <bean id="frontAddress" class="ru.otus.bvd.messagesystem.Address">
-        <constructor-arg name="id" value="Frontend"/>
+        <constructor-arg name="id" value="front"/>
     </bean>
     <bean id="dbAddress" class="ru.otus.bvd.messagesystem.Address">
-        <constructor-arg name="id" value="DB"/>
+        <constructor-arg name="id" value="db"/>
     </bean>
     
     <bean id="messageSystemContext" class="ru.otus.bvd.app.MessageSystemContext"  >
@@ -22,7 +23,7 @@
     <bean id="frontService" class="ru.otus.bvd.front.FrontendServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />
         <constructor-arg ref = "frontAddress" />
-        <constructor-arg ref = "clientService" />
+        <constructor-arg ref = "clientSocketService" />
     </bean>
     <bean id="dbService" class="ru.otus.bvd.base.DBServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />

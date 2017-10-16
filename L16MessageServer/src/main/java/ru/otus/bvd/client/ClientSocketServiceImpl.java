@@ -14,13 +14,13 @@ import java.util.logging.Logger;
 /**
  * Created by vadim on 14.10.17.
  */
-public class ClientServiceImpl implements ClientService {
+public class ClientSocketServiceImpl implements ClientSocketService {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5050;
     private static final int PAUSE_MS = 5000;
     private static final int MAX_MESSAGES_COUNT = 5;
-    private static final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(ClientSocketServiceImpl.class.getName());
 
     private SocketMsgClient client;
 
@@ -42,16 +42,16 @@ public class ClientServiceImpl implements ClientService {
             }
         });
 
-        int count = 0;
-        while (count < MAX_MESSAGES_COUNT) {
-            Message msg = new PingMsg(pid);
-            client.send(msg);
-            System.out.println("Message sent: " + msg.toString());
-            Thread.sleep(PAUSE_MS);
-            count++;
-        }
-        client.close();
-        executorService.shutdown();
+//        int count = 0;
+//        while (count < MAX_MESSAGES_COUNT) {
+//            Message msg = new PingMsg(pid);
+//            client.send(msg);
+//            System.out.println("Message sent: " + msg.toString());
+//            Thread.sleep(PAUSE_MS);
+//            count++;
+//        }
+//        client.close();
+//        executorService.shutdown();
     }
 
     @Override

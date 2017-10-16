@@ -1,5 +1,7 @@
 package ru.otus.bvd.front;
 
+import java.io.Serializable;
+
 import ru.otus.bvd.app.MsgToDB;
 import ru.otus.bvd.base.DBService;
 import ru.otus.bvd.dataset.UserDataSet;
@@ -10,7 +12,7 @@ import ru.otus.bvd.messagesystem.MessageSystem;
  * Created by tully.
  */
 public class MsgGetUserById extends MsgToDB {
-    private final MessageSystem messageSystem;
+    private transient final  MessageSystem messageSystem;
     private final long userId;
 
     public MsgGetUserById(MessageSystem messageSystem, Address from, Address to, long requestId, long userId) {

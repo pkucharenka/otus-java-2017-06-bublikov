@@ -1,24 +1,14 @@
 package ru.otus.bvd.front;
 
 
-import java.lang.management.ManagementFactory;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ru.otus.bvd.app.MessageSystemContext;
-import ru.otus.bvd.app.SocketMsgClient;
-import ru.otus.bvd.client.ClientService;
-import ru.otus.bvd.client.ManagedMsgSocketClient;
-import ru.otus.bvd.example.MainMessageSystem;
+import ru.otus.bvd.client.ClientSocketService;
 import ru.otus.bvd.messagesystem.Address;
 import ru.otus.bvd.messagesystem.Addressee;
 import ru.otus.bvd.messagesystem.Message;
-import ru.otus.bvd.messagesystem.PingMsg;
 
 /**
  * Created by tully.
@@ -26,11 +16,11 @@ import ru.otus.bvd.messagesystem.PingMsg;
 public class FrontendServiceImpl implements FrontendService, Addressee {
     private final Address address;
     private final MessageSystemContext context;
-    private final ClientService clientService;
+    private final ClientSocketService clientService;
     private static final ConcurrentHashMap<Long, FrontSocket> requests = new ConcurrentHashMap<>();
     private static final Logger logger = Logger.getLogger(FrontendServiceImpl.class.getName());
 
-    public FrontendServiceImpl(MessageSystemContext context, Address address, ClientService clientService) {
+    public FrontendServiceImpl(MessageSystemContext context, Address address, ClientSocketService clientService) {
         this.context = context;
         this.address = address;
         this.clientService = clientService;
