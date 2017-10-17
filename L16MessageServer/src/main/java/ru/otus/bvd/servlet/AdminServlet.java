@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.cache.CacheEngine;
 import ru.otus.bvd.cache.CacheEngineAdmin;
 import ru.otus.bvd.example.DBActivity;

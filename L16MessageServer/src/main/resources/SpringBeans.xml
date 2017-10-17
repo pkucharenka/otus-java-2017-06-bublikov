@@ -19,12 +19,13 @@
         <property name="frontAddress" ref = "frontAddress" />
         <property name="dbAddress" ref = "dbAddress" />
     </bean>
-
+<!-- 
     <bean id="frontService" class="ru.otus.bvd.front.FrontendServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />
         <constructor-arg ref = "frontAddress" />
         <constructor-arg ref = "clientSocketService" />
     </bean>
+ -->    
     <bean id="dbService" class="ru.otus.bvd.base.DBServiceImpl" init-method="init">
         <constructor-arg ref = "messageSystemContext" />
         <constructor-arg ref = "dbAddress" />

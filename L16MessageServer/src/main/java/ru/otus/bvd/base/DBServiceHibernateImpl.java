@@ -13,6 +13,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.dao.UserDataSetDaoHibernate;
 import ru.otus.bvd.dataset.AddressDataSet;
 import ru.otus.bvd.dataset.PhoneDataSet;

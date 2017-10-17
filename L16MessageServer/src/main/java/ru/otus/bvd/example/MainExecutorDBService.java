@@ -1,6 +1,6 @@
 package ru.otus.bvd.example;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.base.DBServiceImpl;
 import ru.otus.bvd.dataset.UserDataSet;
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.messagesystem.MessageSystem;
 import ru.otus.bvd.webserver.WebServer;
 

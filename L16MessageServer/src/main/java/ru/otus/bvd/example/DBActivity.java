@@ -3,7 +3,7 @@ package ru.otus.bvd.example;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.dataset.UserDataSet;
 
 public class DBActivity implements Runnable {

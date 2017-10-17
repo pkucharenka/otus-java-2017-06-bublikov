@@ -65,4 +65,23 @@ public class BlockingEchoSocketMsgServer {
             }
         }
     }
+
+    private void dispatch() {
+        while (true) {
+            for (MsgClient client : clients) {
+                Message msg = client.pool(); //get
+                while (msg != null) {
+                    System.out.println("Echoing the message: " + msg.toString());
+                    client.send(msg);
+                    msg = client.pool();
+                }
+            }
+            try {
+                Thread.sleep(ECHO_DELAY);
+            } catch (InterruptedException e) {
+                logger.log(Level.SEVERE, e.toString());
+            }
+        }
+    }
+
 }
