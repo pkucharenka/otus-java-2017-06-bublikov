@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.messagesystem.MessageSystem;
 
 public class MainExecutorDBServiceStandalone {

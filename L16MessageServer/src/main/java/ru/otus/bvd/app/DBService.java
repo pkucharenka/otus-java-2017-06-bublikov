@@ -1,4 +1,4 @@
-package ru.otus.bvd.base;
+package ru.otus.bvd.app;
 
 import ru.otus.bvd.dataset.UserDataSet;
 

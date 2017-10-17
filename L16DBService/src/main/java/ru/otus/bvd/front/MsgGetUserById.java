@@ -1,7 +1,7 @@
 package ru.otus.bvd.front;
 
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.app.MsgToDB;
-import ru.otus.bvd.base.DBService;
 import ru.otus.bvd.dataset.UserDataSet;
 import ru.otus.bvd.messagesystem.Address;
 import ru.otus.bvd.messagesystem.MessageSystem;

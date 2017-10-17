@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.app.MessageSystemContext;
 import ru.otus.bvd.cache.CacheElement;
 import ru.otus.bvd.cache.CacheEngine;

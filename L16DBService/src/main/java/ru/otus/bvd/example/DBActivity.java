@@ -4,7 +4,7 @@ import java.util.Random;
 import static java.util.logging.Level.*;
 import java.util.logging.Logger;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.dataset.UserDataSet;
 
 public class DBActivity implements Runnable {

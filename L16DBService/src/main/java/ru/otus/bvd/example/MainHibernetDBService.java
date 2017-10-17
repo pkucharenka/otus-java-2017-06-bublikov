@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.h2.tools.Server;
 
-import ru.otus.bvd.base.DBService;
+import ru.otus.bvd.app.DBService;
 import ru.otus.bvd.base.DBServiceHibernateImpl;
 import ru.otus.bvd.dataset.AddressDataSet;
 import ru.otus.bvd.dataset.PhoneDataSet;
