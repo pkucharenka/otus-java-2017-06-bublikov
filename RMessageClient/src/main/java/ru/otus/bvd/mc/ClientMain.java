@@ -1,6 +1,7 @@
 package ru.otus.bvd.mc;
 
 import java.lang.management.ManagementFactory;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Handler;
@@ -38,7 +39,7 @@ public class ClientMain {
         String pid = ManagementFactory.getRuntimeMXBean().getName();
 
         SocketMsgClient client = new ManagedMsgSocketClient(HOST, PORT);
-        messageSystemAddress = new Address(AddressGroup.MESSAGESYSTEM);
+        messageSystemAddress = new Address(AddressGroup.MESSAGESYSTEM, "NONE");
         client.init();
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
