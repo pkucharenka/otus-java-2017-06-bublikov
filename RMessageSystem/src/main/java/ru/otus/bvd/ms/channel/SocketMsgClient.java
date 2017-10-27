@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,7 @@ public class SocketMsgClient implements MsgClient {
     public void init() {
         executor.execute(this::sendMessage);
         executor.execute(this::receiveMessage);
-        setAddress( new Address(AddressGroup.FRONTENDSERVICE) );
+        setAddress( new Address(AddressGroup.FRONTENDSERVICE, UUID.randomUUID().toString()) );
     }
 
     public void addShutdownRegistration(Runnable runnable) {
@@ -82,7 +83,7 @@ public class SocketMsgClient implements MsgClient {
             String inputLine;
             StringBuilder stringBuilder = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Message received: " + inputLine);
+            	logger.config("Message received: " + inputLine);
                 stringBuilder.append(inputLine);
                 if (inputLine.isEmpty()) { //empty line is the end of the message
                     String json = stringBuilder.toString();

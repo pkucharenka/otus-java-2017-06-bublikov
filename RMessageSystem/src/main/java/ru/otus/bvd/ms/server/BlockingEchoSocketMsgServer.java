@@ -52,7 +52,8 @@ public class BlockingEchoSocketMsgServer {
             for (MsgClient client : clients) {
                 Msg msg = client.pool(); //get
                 while (msg != null) {
-                    msg.exec(client);
+                    зарегистрировать отправителя
+                	msg.exec(client);
                     client.send(msg);
                     msg = client.pool();
                 }

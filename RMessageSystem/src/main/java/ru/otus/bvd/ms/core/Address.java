@@ -10,9 +10,9 @@ public final class Address {
     private final String id;
     private final AddressGroup addressGroup;
     
-    public Address(AddressGroup addressGroup) {
-        this( addressGroup, String.valueOf(ID_GENERATOR.getAndIncrement()) );
-    }
+//    public Address(AddressGroup addressGroup) {
+//        this( addressGroup, String.valueOf(ID_GENERATOR.getAndIncrement()) );
+//    }
 
     public Address(AddressGroup addressGroup, String id) {
         this.id = id;
