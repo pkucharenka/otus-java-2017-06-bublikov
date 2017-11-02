@@ -2,6 +2,7 @@ package ru.otus.bvd.ms.app;
 
 import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.Addressee;
+import ru.otus.bvd.ms.core.MessageSystem;
 
 /**
  * Created by tully.
@@ -9,8 +10,10 @@ import ru.otus.bvd.ms.core.Addressee;
 public abstract class Msg {
     public static final String CLASS_NAME_VARIABLE = "className";
     
-    private final Address from;
-    private final Address to;
+    protected Address from;
+    protected Address to;
+    
+    private transient MessageSystem messageSystem;    
     
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final String className;
@@ -29,6 +32,21 @@ public abstract class Msg {
         return to;
     }
 
+    public void setFrom(Address address) {
+    	this.from = address;
+    }
+    
+    public void setTo(Address address) {
+    	this.to = address;
+    }
+    
+    public void setMessageSystem(MessageSystem messageSystem) {
+    	this.messageSystem = messageSystem;
+    }
+    public MessageSystem getMessageSystem() {
+    	return messageSystem;
+    }
+    
     public abstract void exec(Addressee addressee);
     
 }

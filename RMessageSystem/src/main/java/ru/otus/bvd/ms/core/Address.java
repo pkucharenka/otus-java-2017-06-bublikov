@@ -29,6 +29,14 @@ public final class Address {
         return id != null ? id.equals(address.id) : address.id == null;
     }
 
+    public AddressGroup getAddressGroup() {
+    	return addressGroup;
+    }
+    
+    public String getId() {
+    	return id;
+    }
+    
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;

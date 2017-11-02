@@ -3,6 +3,9 @@ package ru.otus.bvd.ms.server;
 import ru.otus.bvd.ms.app.Msg;
 import ru.otus.bvd.ms.app.MsgClient;
 import ru.otus.bvd.ms.channel.SocketMsgClient;
+import ru.otus.bvd.ms.core.Address;
+import ru.otus.bvd.ms.core.Addressee;
+import ru.otus.bvd.ms.core.MessageSystemContext;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,11 +27,13 @@ public class BlockingEchoSocketMsgServer {
     private static final int ECHO_DELAY = 100;
 
     private final ExecutorService executor;
-    private final List<MsgClient> clients;
+    private final List<SocketMsgClient> clients;
+    private final MessageSystemContext messageSystemContext;
 
-    public BlockingEchoSocketMsgServer() {
+    public BlockingEchoSocketMsgServer(MessageSystemContext messageSystemContext) {
         executor = Executors.newFixedThreadPool(THREADS_NUMBER);
         clients = new CopyOnWriteArrayList<>();
+        this.messageSystemContext = messageSystemContext;
     }
 
     public void start() throws Exception {
@@ -38,9 +43,13 @@ public class BlockingEchoSocketMsgServer {
             logger.finest("Server started on port: " + serverSocket.getLocalPort());
             while (!executor.isShutdown()) {
                 Socket socket = serverSocket.accept(); //blocks
-                SocketMsgClient client = new SocketMsgClient(socket);
+                SocketMsgClient client = new SocketMsgClient(socket, messageSystemContext);
                 client.init();
-                client.addShutdownRegistration(() -> clients.remove(client));
+                client.addShutdownRegistration(() -> {
+                	clients.remove(client);
+                	messageSystemContext.getMessageSystem().stop(client);
+                	client.executor.shutdownNow();
+                });
                 clients.add(client);
             }
         }
@@ -49,13 +58,26 @@ public class BlockingEchoSocketMsgServer {
     @SuppressWarnings("InfiniteLoopStatement")
     private void echo() {
         while (true) {
-            for (MsgClient client : clients) {
+            for (SocketMsgClient client : clients) {
                 Msg msg = client.pool(); //get
                 while (msg != null) {
-                    зарегистрировать отправителя
-                	msg.exec(client);
-                    client.send(msg);
-                    msg = client.pool();
+                    if (client.getAddress() == null) {
+                    	Address clientAddress = new Address(msg.getFrom().getAddressGroup(), msg.getFrom().getId());
+                    	logger.config("New address = " + clientAddress.getAddressGroup() + " " + clientAddress.getId() + " " + clientAddress);
+                    	client.setAddress( clientAddress );
+                    	messageSystemContext.addAddresse(client);
+                    	messageSystemContext.getMessageSystem().addAddressee(client);
+                    }                    	
+                	Address from = messageSystemContext.getAddresse( msg.getFrom().getAddressGroup(), msg.getFrom().getId() ).getAddress(); 
+                    Addressee toAddressee = messageSystemContext.getAddresse( msg.getTo().getAddressGroup(), msg.getTo().getId() );
+                    if (toAddressee != null) {
+	                	Address to =  messageSystemContext.getAddresse( msg.getTo().getAddressGroup(), msg.getTo().getId() ).getAddress();
+	                    msg.setFrom(from);
+	                    msg.setTo(to);
+	                    msg.setMessageSystem(messageSystemContext.getMessageSystem());
+	                    messageSystemContext.getMessageSystem().sendMessage(msg);
+                    }    
+                    msg = client.pool();                    
                 }
             }
             try {

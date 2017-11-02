@@ -7,6 +7,7 @@ import ru.otus.bvd.ms.app.MsgClient;
 import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.AddressGroup;
 import ru.otus.bvd.ms.core.Addressee;
+import ru.otus.bvd.ms.core.MessageSystemContext;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,16 +34,19 @@ public class SocketMsgClient implements MsgClient {
     private final BlockingQueue<Msg> output = new LinkedBlockingQueue<>();
     private final BlockingQueue<Msg> input = new LinkedBlockingQueue<>();
 
-    private final ExecutorService executor;
+    public final ExecutorService executor;
     private final Socket socket;
     private final List<Runnable> shutdownRegistrations;
 
+    private final MessageSystemContext messageSystemContext;
+    
     private Address address;   
     
-    public SocketMsgClient(Socket socket) {
+    public SocketMsgClient(Socket socket, MessageSystemContext messageSystemContext) {
         this.socket = socket;
         this.shutdownRegistrations = new CopyOnWriteArrayList<>();
         this.executor = Executors.newFixedThreadPool(WORKERS_COUNT);
+        this.messageSystemContext = messageSystemContext;
     }
     
     @Override
@@ -71,7 +75,6 @@ public class SocketMsgClient implements MsgClient {
     public void init() {
         executor.execute(this::sendMessage);
         executor.execute(this::receiveMessage);
-        setAddress( new Address(AddressGroup.FRONTENDSERVICE, UUID.randomUUID().toString()) );
     }
 
     public void addShutdownRegistration(Runnable runnable) {
@@ -82,7 +85,7 @@ public class SocketMsgClient implements MsgClient {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             String inputLine;
             StringBuilder stringBuilder = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
+            while (!Thread.currentThread().isInterrupted() && (inputLine = in.readLine()) != null) {
             	logger.config("Message received: " + inputLine);
                 stringBuilder.append(inputLine);
                 if (inputLine.isEmpty()) { //empty line is the end of the message
@@ -97,12 +100,15 @@ public class SocketMsgClient implements MsgClient {
         } finally {
             close();
         }
+        
     }
 
     private void sendMessage() {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-            while (socket.isConnected()) {
-                Msg msg = output.take(); //blocks
+            while (!Thread.currentThread().isInterrupted() && socket.isConnected()) {
+                Msg msg = output.poll(1, TimeUnit.SECONDS); //blocks
+                if (msg == null)
+                	continue;
                 String json = new Gson().toJson(msg);
                 out.println(json);
                 out.println(); //end of message
@@ -120,6 +126,7 @@ public class SocketMsgClient implements MsgClient {
         return (Msg) new Gson().fromJson(json, msgClass);
     }
 
+    @Override
     public void setAddress(Address address) {
     	this.address = address;
     }

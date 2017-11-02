@@ -13,6 +13,9 @@ import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
 import ru.otus.bvd.ms.app.ProcessRunner;
+import ru.otus.bvd.ms.core.AddressGroup;
+import ru.otus.bvd.ms.core.MessageSystem;
+import ru.otus.bvd.ms.core.MessageSystemContext;
 import ru.otus.bvd.ms.runner.ProcessRunnerImpl;
 import ru.otus.bvd.ms.server.BlockingEchoSocketMsgServer;
 
@@ -24,7 +27,7 @@ public class ServerMain {
 
     private static final String CLIENT_START_COMMAND = "java -jar ../RMessageClient/target/client.jar ${instanceId}";
     private static final int CLIENT_START_DELAY_SEC = 1;
-    private static final int CLIENTS_COUNT = 0;
+    private static final int CLIENTS_COUNT = 30;
 
     public static void main(String[] args) throws Exception {
     	configureLog(Level.ALL);
@@ -42,16 +45,22 @@ public class ServerMain {
     }
 
     private void startBlockingServer() throws Exception {
-        new BlockingEchoSocketMsgServer().start();
+    	MessageSystem messageSystem = new MessageSystem();
+        MessageSystemContext messageSystemContext = new MessageSystemContext(messageSystem);
+        messageSystem.init();
+        messageSystemContext.addAddresse(messageSystem);
+    	messageSystem.start();
+    	new BlockingEchoSocketMsgServer(messageSystemContext).start();
     }
 
     private AtomicInteger clientInstanceCounter = new AtomicInteger(0);
     private void startClients(int count, ScheduledExecutorService executorService) {
         for (int i = 0; i < count; i++) {
-            executorService.schedule(() -> {
+        	final String addressGroup = (i & 1) == 0 ? AddressGroup.FRONTENDSERVICE.toString() : AddressGroup.DBSERVICE.toString();
+        	executorService.schedule(() -> {
                 try {
                     ProcessRunner processRunner = new ProcessRunnerImpl();
-                    processRunner.start(CLIENT_START_COMMAND.replace("${instanceId}", ""+clientInstanceCounter.getAndIncrement()));
+                    processRunner.start(CLIENT_START_COMMAND.replace("${instanceId}", addressGroup) );
                     
                 } catch (IOException e) {
                     logger.log(Level.SEVERE, e.getMessage());

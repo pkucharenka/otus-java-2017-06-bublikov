@@ -9,14 +9,15 @@ import ru.otus.bvd.ms.core.Addressee;
 /**
  * Created by tully.
  */
-public class PingMsg extends Msg {
-	private static final Logger logger = Logger.getLogger(PingMsg.class.getName());
+public class PingMsgRq extends Msg {
+	private static final Logger logger = Logger.getLogger(PingMsgRq.class.getName());
 	
 	private final long time;
     private final String pid;
+    
 
-    public PingMsg(String pid, Address from, Address to) {
-        super(PingMsg.class, from, to);
+    public PingMsgRq(String pid, Address from, Address to) {
+        super(PingMsgRq.class, from, to);
         this.pid = pid;
         time = System.currentTimeMillis();
     }
@@ -31,12 +32,11 @@ public class PingMsg extends Msg {
 
     @Override
     public String toString() {
-        return "PingMsg{" + "pid='" + pid + ", time=" + time + '\'' + '}';
+        return "PingMsgRq{" + "pid='" + pid + ", time=" + time + '\'' + '}';
     }
 
 	@Override
 	public void exec(Addressee addressee) {
-		logger.finest("Echoing the message: " + this.toString());
-		
+		getMessageSystem().sendMessage( new PingMsgRs(pid, to, from) );
 	}
 }
