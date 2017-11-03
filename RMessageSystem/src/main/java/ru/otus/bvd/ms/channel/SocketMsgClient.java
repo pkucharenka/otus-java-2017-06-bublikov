@@ -1,28 +1,30 @@
 package ru.otus.bvd.ms.channel;
 
-import com.google.gson.Gson;
-
-import ru.otus.bvd.ms.app.Msg;
-import ru.otus.bvd.ms.app.MsgClient;
-import ru.otus.bvd.ms.core.Address;
-import ru.otus.bvd.ms.core.AddressGroup;
-import ru.otus.bvd.ms.core.Addressee;
-import ru.otus.bvd.ms.core.MessageSystemContext;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.google.gson.Gson;
+
+import ru.otus.bvd.ms.app.Msg;
+import ru.otus.bvd.ms.app.MsgClient;
+import ru.otus.bvd.ms.core.Address;
+import ru.otus.bvd.ms.core.MessageSystemContext;
 
 /**
  * Created by tully.
@@ -38,15 +40,12 @@ public class SocketMsgClient implements MsgClient {
     private final Socket socket;
     private final List<Runnable> shutdownRegistrations;
 
-    private final MessageSystemContext messageSystemContext;
-    
     private Address address;   
     
     public SocketMsgClient(Socket socket, MessageSystemContext messageSystemContext) {
         this.socket = socket;
         this.shutdownRegistrations = new CopyOnWriteArrayList<>();
         this.executor = Executors.newFixedThreadPool(WORKERS_COUNT);
-        this.messageSystemContext = messageSystemContext;
     }
     
     @Override

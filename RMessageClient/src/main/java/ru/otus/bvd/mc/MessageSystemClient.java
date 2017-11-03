@@ -12,7 +12,7 @@ import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.AddressGroup;
 import ru.otus.bvd.ms.messages.PingMsgRq;
 
-public class MessageSystemClient {
+public abstract class MessageSystemClient {
     private static final Logger logger = Logger.getLogger(MessageSystemClient.class.getName());
     private final ExecutorService executorTake;
     private final SocketMsgClient socketClient;
@@ -28,8 +28,8 @@ public class MessageSystemClient {
     	executorTake.submit(() -> {
             try {
                 while (true) {
-                    Object msg = socketClient.take();
-                    logger.fine(("Message received: " + msg.toString()));
+                    Msg msg = (Msg) socketClient.take();
+                    process(msg);
                 }
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, e.getMessage());
@@ -49,6 +49,10 @@ public class MessageSystemClient {
     public void stop() {
         socketClient.close();
         executorTake.shutdown();    	
+    }
+    
+    public void process(Msg msg) {
+    	logger.fine(("Message received: " + msg.toString()));
     }
     
 }

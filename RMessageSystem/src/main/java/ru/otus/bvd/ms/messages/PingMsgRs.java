@@ -36,11 +36,6 @@ public class PingMsgRs extends Msg {
     }
 
 	@Override
-	public void exec(Addressee addressee) {
-        if (addressee instanceof MsgClient) {
-    		logger.finest("Echoing the message: " + this.toString());
-            MsgClient msgClient = (MsgClient) addressee;	
-            msgClient.send(this);
-        }
+	public void execEndPoint() {
 	}
 }

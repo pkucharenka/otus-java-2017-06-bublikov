@@ -47,6 +47,12 @@ public abstract class Msg {
     	return messageSystem;
     }
     
-    public abstract void exec(Addressee addressee);
-    
+    public void execMS(Addressee addressee) {
+        if (addressee instanceof MsgClient) {
+        	MsgClient msgClient = (MsgClient) addressee;
+        	msgClient.send(this);
+        }	
+    }
+
+    public abstract void execEndPoint();
 }

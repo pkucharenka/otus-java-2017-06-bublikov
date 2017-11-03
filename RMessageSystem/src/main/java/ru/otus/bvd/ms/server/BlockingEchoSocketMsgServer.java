@@ -37,7 +37,7 @@ public class BlockingEchoSocketMsgServer {
     }
 
     public void start() throws Exception {
-        executor.submit(this::echo);
+        executor.submit(this::process);
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             logger.finest("Server started on port: " + serverSocket.getLocalPort());
@@ -56,7 +56,7 @@ public class BlockingEchoSocketMsgServer {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    private void echo() {
+    private void process() {
         while (true) {
             for (SocketMsgClient client : clients) {
                 Msg msg = client.pool(); //get

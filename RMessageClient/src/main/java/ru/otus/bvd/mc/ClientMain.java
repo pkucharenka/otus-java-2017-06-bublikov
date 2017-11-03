@@ -5,7 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.AddressGroup;
+import ru.otus.bvd.ms.messages.MsgGetUserByIdAnswer;
 
 
 /**
@@ -29,8 +31,12 @@ public class ClientMain {
     	
     	ManagedMsgSocketClient socketClient = new ManagedMsgSocketClient(ManagedMsgSocketClient.HOST_DEFAULT, ManagedMsgSocketClient.PORT_DEFAULT, addressGroup);
         socketClient.init();
-    	MessageSystemClient messageSystemClient = new MessageSystemClient(socketClient);
+    	MessageSystemClient messageSystemClient = new MessageSystemClient(socketClient) {};
     	messageSystemClient.init();
+    	
+    	MsgGetUserByIdAnswer msgUser = new MsgGetUserByIdAnswer(socketClient.getAddress(), new Address(AddressGroup.FRONTENDSERVICE, "ANY"), 1234, "BVD", 456);
+    	socketClient.send(msgUser);
+    	
     	Thread.sleep(2000);
     	messageSystemClient.stop();
         System.exit(0);

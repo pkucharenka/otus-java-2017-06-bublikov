@@ -36,7 +36,11 @@ public class PingMsgRq extends Msg {
     }
 
 	@Override
-	public void exec(Addressee addressee) {
+	public void execMS(Addressee addressee) {
 		getMessageSystem().sendMessage( new PingMsgRs(pid, to, from) );
+	}
+
+	@Override
+	public void execEndPoint() {
 	}
 }

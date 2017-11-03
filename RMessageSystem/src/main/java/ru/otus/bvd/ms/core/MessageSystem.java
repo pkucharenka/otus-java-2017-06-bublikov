@@ -47,7 +47,7 @@ public final class MessageSystem implements Addressee {
 	                    ConcurrentLinkedQueue<Msg> queue = messagesMap.get(entry.getKey());
 	                    while (!queue.isEmpty()) {
 	                    	Msg message = queue.poll();
-	                        message.exec(entry.getValue());
+	                        message.execMS(entry.getValue());
 	                    }
 	                    try {
 	                        Thread.sleep(MessageSystem.DEFAULT_STEP_TIME);

@@ -26,8 +26,10 @@ public class ServerMain {
     private static final Logger logger = Logger.getLogger(ServerMain.class.getName());
 
     private static final String CLIENT_START_COMMAND = "java -jar ../RMessageClient/target/client.jar ${instanceId}";
+    private static final String FRONTENDSERVICE_START_COMMAND = "java -jar ../RFrontendService/target/frontendservice.jar";
     private static final int CLIENT_START_DELAY_SEC = 1;
-    private static final int CLIENTS_COUNT = 30;
+    private static final int CLIENTS_COUNT = 0;
+    private static final int FRONTEND_COUNT = 0;
 
     public static void main(String[] args) throws Exception {
     	configureLog(Level.ALL);
@@ -38,6 +40,8 @@ public class ServerMain {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         
         startClients(CLIENTS_COUNT, executorService);
+        
+        startFrontendService(FRONTEND_COUNT, executorService);
 
         startBlockingServer();
 
@@ -65,8 +69,21 @@ public class ServerMain {
                 } catch (IOException e) {
                     logger.log(Level.SEVERE, e.getMessage());
                 }
-            }, CLIENT_START_DELAY_SEC + i, TimeUnit.SECONDS);
-        }
+            }, CLIENT_START_DELAY_SEC + i, TimeUnit.SECONDS);        	
+        }        
+    }
+    private void startFrontendService(int count, ScheduledExecutorService executorService) {
+        for (int i = 0; i < count; i++) {
+        	executorService.schedule(() -> {
+                try {
+                    ProcessRunner processRunner = new ProcessRunnerImpl();
+                    processRunner.start(FRONTENDSERVICE_START_COMMAND);
+                    
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                }
+            }, CLIENT_START_DELAY_SEC + i, TimeUnit.SECONDS);        	
+        }        
     }
 
     private static void configureLog(Level level) {
