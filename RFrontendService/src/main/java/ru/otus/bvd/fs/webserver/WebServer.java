@@ -1,4 +1,4 @@
-package ru.otus.bvd.webserver;
+package ru.otus.bvd.fs.webserver;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -6,8 +6,8 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import ru.otus.bvd.front.FrontSocketServlet;
-import ru.otus.bvd.servlet.LoginServlet;
+import ru.otus.bvd.fs.front.FrontSocketServlet;
+import ru.otus.bvd.fs.servlet.LoginServlet;
 
 /**
  * Created by vadim on 10.09.17.

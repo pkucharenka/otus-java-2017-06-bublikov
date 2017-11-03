@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 import ru.otus.bvd.ms.app.ProcessRunner;
-import ru.otus.bvd.ms.core.AddressGroup;
 import ru.otus.bvd.ms.core.MessageSystem;
 import ru.otus.bvd.ms.core.MessageSystemContext;
 import ru.otus.bvd.ms.runner.ProcessRunnerImpl;
@@ -26,10 +22,11 @@ public class ServerMain {
     private static final Logger logger = Logger.getLogger(ServerMain.class.getName());
 
     private static final String CLIENT_START_COMMAND = "java -jar ../RMessageClient/target/client.jar ${instanceId}";
-    private static final String FRONTENDSERVICE_START_COMMAND = "java -jar ../RFrontendService/target/frontendservice.jar";
+    private static final String FRONTENDSERVICE_START_COMMAND_1 = "java -jar ../RFrontendService/target/frontendservice.jar 8080";
+    private static final String FRONTENDSERVICE_START_COMMAND_2 = "java -jar ../RFrontendService/target/frontendservice.jar 8090";
+    private static final String DBSERVICE_START_COMMAND = "java -jar ../RDBService/target/rdbservice.jar";
     private static final int CLIENT_START_DELAY_SEC = 1;
     private static final int CLIENTS_COUNT = 0;
-    private static final int FRONTEND_COUNT = 0;
 
     public static void main(String[] args) throws Exception {
     	configureLog(Level.ALL);
@@ -37,14 +34,9 @@ public class ServerMain {
     }
 
     private void start() throws Exception {
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        
-        startClients(CLIENTS_COUNT, executorService);
-        
-        startFrontendService(FRONTEND_COUNT, executorService);
-
-        startBlockingServer();
-
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();        
+        startClients(executorService);
+        startBlockingServer();        
         executorService.shutdown();
     }
 
@@ -57,35 +49,26 @@ public class ServerMain {
     	new BlockingEchoSocketMsgServer(messageSystemContext).start();
     }
 
-    private AtomicInteger clientInstanceCounter = new AtomicInteger(0);
-    private void startClients(int count, ScheduledExecutorService executorService) {
-        for (int i = 0; i < count; i++) {
-        	final String addressGroup = (i & 1) == 0 ? AddressGroup.FRONTENDSERVICE.toString() : AddressGroup.DBSERVICE.toString();
-        	executorService.schedule(() -> {
-                try {
-                    ProcessRunner processRunner = new ProcessRunnerImpl();
-                    processRunner.start(CLIENT_START_COMMAND.replace("${instanceId}", addressGroup) );
-                    
-                } catch (IOException e) {
-                    logger.log(Level.SEVERE, e.getMessage());
-                }
-            }, CLIENT_START_DELAY_SEC + i, TimeUnit.SECONDS);        	
-        }        
+    private void startClients(ScheduledExecutorService executorService) throws InterruptedException {
+    	startClient(executorService, DBSERVICE_START_COMMAND, CLIENT_START_DELAY_SEC);
+    	startClient(executorService, DBSERVICE_START_COMMAND, CLIENT_START_DELAY_SEC + 1);
+    	startClient(executorService, FRONTENDSERVICE_START_COMMAND_1, CLIENT_START_DELAY_SEC + 2);
+    	startClient(executorService, FRONTENDSERVICE_START_COMMAND_2, CLIENT_START_DELAY_SEC + 3);
     }
-    private void startFrontendService(int count, ScheduledExecutorService executorService) {
-        for (int i = 0; i < count; i++) {
-        	executorService.schedule(() -> {
-                try {
-                    ProcessRunner processRunner = new ProcessRunnerImpl();
-                    processRunner.start(FRONTENDSERVICE_START_COMMAND);
-                    
-                } catch (IOException e) {
-                    logger.log(Level.SEVERE, e.getMessage());
-                }
-            }, CLIENT_START_DELAY_SEC + i, TimeUnit.SECONDS);        	
-        }        
+    
+    
+    private void startClient(ScheduledExecutorService executorService, String script, int delay) {
+    	executorService.schedule(() -> {
+            try {
+                ProcessRunner processRunner = new ProcessRunnerImpl();
+                processRunner.start(script);                
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage());
+            }
+        }, delay, TimeUnit.SECONDS);    	
     }
-
+    
+    
     private static void configureLog(Level level) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "SERVER: %1$tF %1$tT %4$s %2$s %5$s%6$s%n");
         Logger.getGlobal().setLevel(level);

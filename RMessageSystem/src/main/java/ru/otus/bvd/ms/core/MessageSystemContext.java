@@ -1,6 +1,8 @@
 package ru.otus.bvd.ms.core;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -20,20 +22,24 @@ public class MessageSystemContext {
     }
     
     public Addressee getAddressee(AddressGroup addressGroup) {
-    	for (Addressee addressee : recipients) {
-    		if (addressee.getAddress().getAddressGroup() == addressGroup)
-    			return addressee;
-    	}
-    	return null;
+//    	for (Addressee addressee : recipients) {
+//    		if (addressee.getAddress().getAddressGroup() == addressGroup)
+//    			return addressee;
+//    	}
+    	return getAddresse(addressGroup, "ANY");
     }
     
     public Addressee getAddresse(AddressGroup addressGroup, String addressId) {
     	if ("ANY".equals(addressId)) {
-	    	for (Addressee addressee : recipients) {
-	    		Address addr = addressee.getAddress();
+    		List<Addressee> a = new ArrayList<>();
+    		for (Addressee addressee : recipients) {
+	    		Address addr = addressee.getAddress();	    		
 	    		if (addr.getAddressGroup() == addressGroup)
-	    			return addressee;
+	    			a.add(addressee);
 	    	}    		
+    		Random rand = new Random();
+    		Addressee randomElement = a.get(rand.nextInt(a.size()));    
+    		return randomElement;
     	} else {
 	    	for (Addressee addressee : recipients) {
 	    		Address addr = addressee.getAddress();

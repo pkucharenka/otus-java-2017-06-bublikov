@@ -1,4 +1,4 @@
-package ru.otus.bvd.front;
+package ru.otus.bvd.fs.front;
 
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;

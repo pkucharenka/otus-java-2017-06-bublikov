@@ -1,5 +1,6 @@
 package ru.otus.bvd.ms.app;
 
+import ru.otus.bvd.ms.channel.SocketMsgClient;
 import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.Addressee;
 import ru.otus.bvd.ms.core.MessageSystem;
@@ -12,8 +13,8 @@ public abstract class Msg {
     
     protected Address from;
     protected Address to;
-    
-    private transient MessageSystem messageSystem;    
+    protected transient MessageSystem messageSystem;    
+    public SocketMsgClient socketMsgClient;
     
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final String className;
@@ -45,6 +46,9 @@ public abstract class Msg {
     }
     public MessageSystem getMessageSystem() {
     	return messageSystem;
+    }
+    public void setSocketMsgClient(SocketMsgClient socketMsgClient) {
+    	this.socketMsgClient = socketMsgClient;
     }
     
     public void execMS(Addressee addressee) {

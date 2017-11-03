@@ -1,4 +1,4 @@
-package ru.otus.bvd.servlet;
+package ru.otus.bvd.fs.servlet;
 
 import java.io.IOException;
 import java.io.StringWriter;

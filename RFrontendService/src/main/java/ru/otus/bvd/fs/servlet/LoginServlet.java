@@ -1,4 +1,4 @@
-package ru.otus.bvd.servlet;
+package ru.otus.bvd.fs.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

@@ -1,4 +1,4 @@
-package ru.otus.bvd.front;
+package ru.otus.bvd.fs.front;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
