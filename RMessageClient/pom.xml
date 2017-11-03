@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.otus.bvd</groupId>
-            <artifactId>RMessageSystem</artifactId>
+            <artifactId>messagesystem</artifactId>
             <version>1.0.1</version>
         </dependency>
         <dependency>
