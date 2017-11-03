@@ -5,9 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import ru.otus.bvd.ms.core.Address;
 import ru.otus.bvd.ms.core.AddressGroup;
-import ru.otus.bvd.ms.messages.MsgGetUserByIdAnswer;
 
 
 /**
