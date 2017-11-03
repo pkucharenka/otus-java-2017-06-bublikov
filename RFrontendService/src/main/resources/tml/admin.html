@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Admin</title>
+    <script>
+        function refresh() {
+            location.reload();
+        }
+    </script>
+    
+    
+</head>
+<body onload='setInterval(function(){refresh()}, ${refreshPeriod} );'>
+<!--
+<div class="top">
+    <img src="logo.png"/>
+    <br/>
+    <a href="login">Login</a> <a href="admin">Admin</a> <a href="timer">Timer</a>
+</div>
+ -->
+<p>Cache State:</p>
+<p>Hit count: ${hitCount}</p>
+
+<p>Miss count: ${missCount}</p>
+
+<p>Size: ${size}</p>
+
+<p>Eternal: ${isEternal}</p>
+
+<p>Idle Time: ${idleTime}</p>
+
+<p>Life Time: ${lifeTime}</p>
+
+<p>Max Elements: ${maxElements}</p>
+
+
+</body>
+</html>
