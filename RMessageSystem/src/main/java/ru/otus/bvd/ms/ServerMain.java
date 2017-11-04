@@ -53,7 +53,7 @@ public class ServerMain {
     	startClient(executorService, DBSERVICE_START_COMMAND, CLIENT_START_DELAY_SEC);
     	startClient(executorService, DBSERVICE_START_COMMAND, CLIENT_START_DELAY_SEC + 1);
     	startClient(executorService, FRONTENDSERVICE_START_COMMAND_1, CLIENT_START_DELAY_SEC + 2);
-    	startClient(executorService, FRONTENDSERVICE_START_COMMAND_2, CLIENT_START_DELAY_SEC + 3);
+    	startClient(executorService, FRONTENDSERVICE_START_COMMAND_2, CLIENT_START_DELAY_SEC + 7);
     }
     
     
